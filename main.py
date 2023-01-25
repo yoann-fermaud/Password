@@ -1,4 +1,5 @@
 import re
+import json
 import hashlib
 
 security_requirements = """
@@ -39,17 +40,35 @@ def encrypt_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 
+def print_password(password):
+    print(f"Valid password !\n"
+          f"Password encrypt is : {encrypt_password(password)}")
+
+
+def save_password(password):
+    with open('password_hl.json', 'r') as f:
+        list_password = json.load(f)
+    if password not in list_password:
+        print_password(password)
+        list_password.append(password)
+        with open('password_hl.json', 'w') as f:
+            json.dump(list_password, f)
+    else:
+        # Saved password : Ex@mple1234
+        print("This password already exists\n")
+        main()
+
+
 def main():
-    print(security_requirements)
     while True:
         password = input_user()
         if check_password(password):
-            print(f"Valid password !\n"
-                  f"Password encrypt is : {encrypt_password(password)}")
+            save_password(encrypt_password(password))
             break
         else:
             print("Invalid password ! Please check the security requirements.\n")
 
 
 if __name__ == '__main__':
+    print(security_requirements)
     main()
