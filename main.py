@@ -2,6 +2,16 @@ import re
 import json
 import hashlib
 
+
+menu = """
+1. Password
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. Display encrypt passwords
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. Quit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+
 security_requirements = """
 Here are the security requirements for the password :
     ● It must contain at least 8 characters.
@@ -56,10 +66,11 @@ def save_password(password):
     else:
         # Saved password : Ex@mple1234
         print("This password already exists\n")
-        main()
+        menu_password()
 
 
-def main():
+def menu_password():
+    print(security_requirements)
     while True:
         password = input_user()
         if check_password(password):
@@ -69,6 +80,24 @@ def main():
             print("Invalid password ! Please check the security requirements.\n")
 
 
+def menu_print_encrypt_password():
+    with open('password_hl.json', 'r') as f:
+        list_password = json.load(f)
+    print(f"File with existing encrypt passwords\n{list_password}")
+
+
+def main():
+    while True:
+        print(menu)
+        input_case = int(input("Choose your option : "))
+        match input_case:
+            case 1:
+                menu_password()
+            case 2:
+                menu_print_encrypt_password()
+            case 3:
+                quit("See you soon !")
+
+
 if __name__ == '__main__':
-    print(security_requirements)
     main()
