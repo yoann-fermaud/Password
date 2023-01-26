@@ -4,10 +4,9 @@ import hashlib
 
 
 menu = """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Password
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 2. Display encrypt passwords
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 3. Quit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
@@ -64,13 +63,11 @@ def save_password(password):
         with open('password_hl.json', 'w') as f:
             json.dump(list_password, f)
     else:
-        # Saved password : Ex@mple1234
         print("This password already exists\n")
         menu_password()
 
 
 def menu_password():
-    print(security_requirements)
     while True:
         password = input_user()
         if check_password(password):
@@ -92,8 +89,10 @@ def main():
         input_case = int(input("Choose your option : "))
         match input_case:
             case 1:
+                print(security_requirements)
                 menu_password()
             case 2:
+                # Saved password : Ex@mple1234
                 menu_print_encrypt_password()
             case 3:
                 quit("See you soon !")
